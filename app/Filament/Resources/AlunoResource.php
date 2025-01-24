@@ -147,9 +147,12 @@ class AlunoResource extends Resource
             ->description('Preencha com as informações que constam no documento de identificação.')
                 ->schema([
                     Forms\Components\TextInput::make('bi')
-                    ->label('Nº B.I ou C.N')
+                    ->label('Nº B.I')
                     ->required()
-                    ->maxLength(255)
+                    ->mask('999999999aa999') // Máscara para 9 números, 2 letras, 3 números
+                    ->rule('regex:/^\d{9}[A-Z]{2}\d{3}$/') // Validação regex
+                    ->placeholder('Ex: 123456789LA123')
+                    ->maxLength(14)
                     ->suffixIcon('heroicon-o-clipboard-document-list')
                         ->suffixIconColor('primary'),
                     Forms\Components\DatePicker::make('data_nascimento')
