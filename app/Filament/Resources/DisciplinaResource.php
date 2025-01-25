@@ -22,7 +22,7 @@ class DisciplinaResource extends Resource
 {
     protected static ?string $model = Disciplina::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     protected static ?string $navigationGroup = 'Gestão Acadêmica';
 

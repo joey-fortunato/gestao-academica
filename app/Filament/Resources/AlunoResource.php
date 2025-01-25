@@ -67,7 +67,6 @@ class AlunoResource extends Resource
                         ->label('Nº do Processo')
                         ->suffixIcon('heroicon-o-clipboard-document-list')
                         ->suffixIconColor('primary')
-                        ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(255),
                     Forms\Components\TextInput::make('nome')
@@ -90,19 +89,17 @@ class AlunoResource extends Resource
                         ->required(),
                     Forms\Components\TextInput::make('email')
                         ->email()
-                        ->suffixIcon('heroicon-o-envelope-open')
+                        ->suffixIcon('heroicon-o-at-symbol')
                         ->suffixIconColor('primary')
-                        ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('telefone')
-                        ->required()
                         ->suffixIcon('heroicon-o-phone')
                         ->suffixIconColor('primary')
                         ->tel()
                         ->numeric() // Aceita apenas números
                         ->minLength(9) // Mínimo de 9 dígitos
-                        ->mask('999 999 999') // Máscara simples
-                ->placeholder('Ex: 912 345 678'),
+                        ->mask('999999999') // Máscara simples
+                ->placeholder('Ex: 912345678'),
                 ])
                 ->columns(3), // Divide os campos em 3 colunas
 
@@ -111,19 +108,16 @@ class AlunoResource extends Resource
             ->description('Preencha as informações de naturalidade.')
                 ->schema([
                     Forms\Components\TextInput::make('naturalidade')
-                    ->required()
                         ->label('Naturalidade')
                         ->suffixIcon('heroicon-o-clipboard-document-list')
                         ->suffixIconColor('primary'),
                     Select::make('provincia')
                         ->label('Província')
-                        ->required()
                         ->options(array_combine($provincias, $provincias))
                         ->searchable()
                         ->suffixIcon('heroicon-o-home')
                         ->suffixIconColor('primary'),
                     Select::make('municipio')
-                    ->required()
                         ->label('Município')
                         ->suffixIcon('heroicon-o-home')
                         ->suffixIconColor('primary')
@@ -135,7 +129,6 @@ class AlunoResource extends Resource
                         ->reactive(),
                         Forms\Components\TextInput::make('residencia')
                         ->label('Residência')
-                        ->required()
                         ->suffixIcon('heroicon-o-home')
                         ->suffixIconColor('primary')
                         ->maxLength(255),
@@ -147,8 +140,7 @@ class AlunoResource extends Resource
             ->description('Preencha com as informações que constam no documento de identificação.')
                 ->schema([
                     Forms\Components\TextInput::make('bi')
-                    ->label('Nº B.I')
-                    ->required()
+                    ->label('B.INº')
                     ->mask('999999999aa999') // Máscara para 9 números, 2 letras, 3 números
                     ->rule('regex:/^\d{9}[A-Z]{2}\d{3}$/') // Validação regex
                     ->placeholder('Ex: 123456789LA123')
@@ -156,22 +148,18 @@ class AlunoResource extends Resource
                     ->suffixIcon('heroicon-o-clipboard-document-list')
                         ->suffixIconColor('primary'),
                     Forms\Components\DatePicker::make('data_nascimento')
-                        ->label('Data de Nascimento')
-                        ->required(),
+                        ->label('Data de Nascimento'),
                     DatePicker::make('data_emissao')
-                    ->required()
                         ->label('Data de Emissão'),
                     DatePicker::make('data_expiracao')
-                    ->required()
                         ->label('Data de Expiração'),
                     Select::make('estado_civil')
-                    ->required()
                         ->label('Estado Civil')
                         ->options([
-                            'Solteiro' => 'Solteiro',
-                            'Casado' => 'Casado',
-                            'Divorciado' => 'Divorciado',
-                            'Viuvo' => 'Viúvo',
+                            'Solteiro(a)' => 'Solteiro(a)',
+                            'Casado(a)' => 'Casado(a)',
+                            'Divorciado(a)' => 'Divorciado(a)',
+                            'Viuvo(a)' => 'Viúvo(a)',
                         ])
                         ->suffixIcon('heroicon-o-heart')
                         ->suffixIconColor('primary'),
@@ -183,22 +171,18 @@ class AlunoResource extends Resource
             ->description('Preencha as informações sobre os pais e encarregado de educação.')
                 ->schema([
                     Forms\Components\TextInput::make('nome_pai')
-                    ->required()
                         ->label('Nome do Pai')
                         ->suffixIcon('heroicon-o-clipboard-document-list')
                         ->suffixIconColor('primary'),
                     Forms\Components\TextInput::make('nome_mae')
-                    ->required()
                         ->label('Nome da Mãe')
                         ->suffixIcon('heroicon-o-clipboard-document-list')
                         ->suffixIconColor('primary'),
                     Forms\Components\TextInput::make('nome_encarregado')
-                    ->required()
                         ->label('Nome do Encarregado de Educação')
                         ->suffixIcon('heroicon-o-clipboard-document-list')
                         ->suffixIconColor('primary'),
                     Forms\Components\TextInput::make('telefone_encarregado')
-                    ->required()
                         ->label('Telefone do Encarregado de Educação')
                         ->suffixIcon('heroicon-o-phone')
                         ->suffixIconColor('primary')
@@ -419,46 +403,68 @@ class AlunoResource extends Resource
             TextColumn::make('nome')
                 ->label('Nome Completo')
                 ->searchable()
+                ->toggleable()
                 ->sortable(),
 
                 TextColumn::make('numero_processo')
                 ->label('Nº do Processo')
                 ->searchable()
+                ->toggleable()
                 ->sortable(),
 
             TextColumn::make('sexo')
                 ->label('Sexo')
                 ->searchable()
+                ->toggleable()
                 ->sortable(),
 
             TextColumn::make('provincia')
                 ->label('Província')
                 ->searchable()
+                ->toggleable()
                 ->sortable(),
 
             TextColumn::make('municipio')
                 ->label('Município')
                 ->searchable()
+                ->toggleable()
                 ->sortable(),
+
+            TextColumn::make('bi')
+                ->label('B.I Nº')
+                ->searchable()
+                ->toggleable()
+                ->sortable(),
+
+            TextColumn::make('data_nascimento')
+                ->label('Data de Nascimento')
+                ->date('d/m/Y') // Formata a data
+                ->toggleable()
+                ->sortable(),
+
 
             TextColumn::make('data_emissao')
                 ->label('Data de Emissão')
                 ->date('d/m/Y') // Formata a data
+                ->toggleable()
                 ->sortable(),
 
             TextColumn::make('data_expiracao')
                 ->label('Data de Expiração')
                 ->date('d/m/Y') // Formata a data
+                ->toggleable()
                 ->sortable(),
 
             TextColumn::make('estado_civil')
                 ->label('Estado Civil')
                 ->searchable()
+                ->toggleable()
                 ->sortable(),
 
             TextColumn::make('nome_pai')
                 ->label('Nome do Pai')
                 ->searchable()
+                ->toggleable()
                 ->sortable(),
 
             TextColumn::make('nome_mae')
@@ -469,11 +475,13 @@ class AlunoResource extends Resource
             TextColumn::make('nome_encarregado')
                 ->label('Encarregado de Educação')
                 ->searchable()
+                ->toggleable()
                 ->sortable(),
 
             TextColumn::make('telefone_encarregado')
                 ->label('Telefone do Encarregado')
                 ->searchable()
+                ->toggleable()
                 ->sortable(),
             ])
             ->filters([

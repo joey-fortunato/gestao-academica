@@ -11,9 +11,14 @@ class Turma extends Model
 {
     protected $fillable = [
         'nome',
+        'abreviacao',
         'curso_id',
         'ano_lectivo_id',
         'escola_id',
+        'classe',
+        'turno',
+        'sala',
+        'director_turma_id',
     ];
 
     public function escola(): BelongsTo
@@ -30,7 +35,12 @@ class Turma extends Model
     // Uma Turma pertence a um Ano Letivo
     public function anoLectivo(): BelongsTo
     {
-        return $this->belongsTo(AnoLectivo::class);
+        return $this->belongsTo(AnoLectivo::class, 'ano_lectivo_id');
+    }
+
+    public function directorTurma()
+    {
+        return $this->belongsTo(Professor::class, 'director_turma_id');
     }
 
     // Uma Turma pode ter várias Matrículas

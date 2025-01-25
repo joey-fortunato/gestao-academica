@@ -29,9 +29,13 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => '#1d4ed8',
+                'primary' => '#014bde',
             ])
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->brandName('Gestão Acadêmica')
+            ->brandLogo(asset('images/cap.png'))
+            ->favicon(asset('images/cap-favicon.png'))
+            ->brandLogoHeight('3rem')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
