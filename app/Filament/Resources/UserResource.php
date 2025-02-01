@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use Illuminate\Support\Facades\Hash;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
@@ -12,6 +13,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\PasswordInput;
+use Illuminate\Support\Facades\Auth;
 
 class UserResource extends Resource
 {
@@ -25,6 +30,7 @@ class UserResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $user = Auth::user();
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
@@ -43,6 +49,17 @@ class UserResource extends Resource
                 ->relationship('roles', 'name')
                 ->multiple() // Permite selecionar vários papéis
                 ->preload(), // Carrega os papéis dinamicamente
+            TextInput::make('password')
+                ->label('Senha')
+                ->password()
+                ->revealable()
+                ->required()
+                ->minLength(8)
+                ->dehydrated(fn ($state) => filled($state)) // Mantém o valor apenas se preenchido
+                ->dehydrateStateUsing(fn ($state) => Hash::make($state)), // Criptografa a senha
+            Forms\Components\Hidden::make('escola_id') // Campo oculto para escola_id
+                ->default($user->escola_id)
+                ->dehydrated(),
             ]);
     }
 

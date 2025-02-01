@@ -55,11 +55,14 @@ class User extends Authenticatable
 
     public function hasPermission($permission)
     {
-        foreach ($this->roles as $role) {
+        $rolesWithPermissions = $this->roles()->with('permissions')->get();
+
+        foreach ($rolesWithPermissions as $role) {
             if ($role->permissions->contains('name', $permission)) {
                 return true;
             }
         }
+
         return false;
     }
 
