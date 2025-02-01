@@ -11,6 +11,9 @@ class Matricula extends Model
     protected $fillable = [
         'aluno_id',
         'turma_id',
+        'curso_id',
+        'turno',
+        'sala',
         'data_matricula',
         'escola_id',
     ];
@@ -24,6 +27,11 @@ class Matricula extends Model
     public function aluno(): BelongsTo
     {
         return $this->belongsTo(Aluno::class);
+    }
+
+    public function curso(): BelongsTo
+    {
+        return $this->belongsTo(Curso::class);
     }
 
     // Uma Matrícula pertence a uma Turma

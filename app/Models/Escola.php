@@ -34,11 +34,5 @@ use Illuminate\Database\Eloquent\Builder;
     {
         parent::boot();
 
-        // Aplica o escopo global para filtrar os dados pela escola do usuário logado
-        static::addGlobalScope('escola', function (Builder $builder) {
-            if (auth()->check() && auth()->user()->escola_id) {
-                $builder->where('escola_id', auth()->user()->escola_id);
-            }
-        });
     }
 }

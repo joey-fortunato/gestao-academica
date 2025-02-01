@@ -36,7 +36,7 @@ class Aluno extends Model
         return $this->belongsTo(Escola::class);
     }
 
-    public function matriculas(): belongsTo
+    public function matricula(): belongsTo
     {
         return $this->belongsTo(Matricula::class);
     }

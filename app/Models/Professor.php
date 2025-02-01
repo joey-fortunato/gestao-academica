@@ -29,6 +29,11 @@ class Professor extends Model
         return $this->belongsToMany(Disciplina::class, 'disciplina_professor');
     }
 
+    public function turma()
+    {
+        return $this->belongsTo(Turma::class);
+    }
+
     public function disciplinaTurmas(): HasMany
     {
         return $this->hasMany(DisciplinaTurma::class);

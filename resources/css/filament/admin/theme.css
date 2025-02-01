@@ -83,5 +83,5 @@ theme: {
     @apply ring-transparent shadow-gray-400 dark:shadow-gray-950;
 }
 .fi-section-content-ctn {
-    display: none !important;
+   @apply display: none !important;
 }
